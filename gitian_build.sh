@@ -8,9 +8,9 @@ sudo service cgmanager start
 sudo service cgproxy start
 sudo service lxcfs start
 
-GD_BUILD_URL="${GD_BUILD_URL:-https://github.com/mazacoin/mazacoin-new}"
-GB_BUILD_COIN="${GD_BUILD_COIN:-maza}"
-GD_BUILD_COMMIT="${GD_BUILD_COMMIT:-master}"
+GD_BUILD_URL=${GD_BUILD_URL:-https://github.com/mazacoin/mazacoin-new}
+GB_BUILD_COIN=${GD_BUILD_COIN:-maza}
+GD_BUILD_COMMIT=${GD_BUILD_COMMIT:-master}
 
 
 cp /etc/hosts /gitian/hosts.orig

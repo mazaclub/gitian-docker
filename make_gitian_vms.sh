@@ -23,7 +23,7 @@ echo "LXC_GUEST_IP=10.0.3.5" >> /data/gitian-builder/gitiian_builder.env
 
 cd /gitian/gitian-builder
 
-cp -av /gitian/gitian-builder /data
+test -d /data/gitian-builder/.git || cp -av /gitian/gitian-builder /data
 test -f  /data/gitian-builder/base-precise-i386  || ./bin/make-base-vm --lxc --arch i386  --suite precise 
 test -f  /data/gitian-builder/base-precise-i386  || cp -av /gitian/gitian-builder/base-precise-i386  /data
 test -f  /data/gitian-builder/base-precise-amd64 || ./bin/make-base-vm --lxc --arch amd64 --suite precise 

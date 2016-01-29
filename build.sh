@@ -2,6 +2,7 @@
 
 set -xeo pipefail
 
+
 GD_ENV_FILE=${1:-maza-10.2.env}
 
 export $(cat maza-10.2.env |egrep -v '^#' | xargs)
@@ -24,14 +25,28 @@ if [ "${ME}" = "0" ] ; then
    exit 2
 fi
 
-NAMESPACE=${LOCAL_USER:-guruvan}
+NAMESPACE=${LOCAL_USER:-gitianbuild}
 
-echo "rm -rf ${NAMESPACE} Stage2 Dockerfile clean.sh" > ./clean.sh
+echo "rm -rf ${NAMESPACE} Stage1 Dockerfile.stage2 Stage2 Dockerfile clean.sh" > ./clean.sh
 chmod +x ./clean.sh 
+
+# make a build dir for Docker 
+# this prevents Docker context from including 20GB of 
+# base-vm files in subsequent runs 
+rm -rf Stage1
+mkdir Stage1 
+cp Dockerfile.stage1 Stage1
+cp gitian_build.sh Stage1
+cp make_gitian_vms.sh Stage1
+cp config-lxc Stage1
+cp ${GD_ENV_FILE} Stage1
+cd Stage1
+
 
 
 sed 's/LOCAL_UID/'${ME}'/g' Dockerfile.stage1 > Dockerfile
 docker build -f Dockerfile -t ${NAMESPACE}/gitian-stage1 . 
+cd ..
 
 mkdir -pv $(pwd)/${NAMESPACE}/gitian-builder 
 mkdir -pv $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src
@@ -40,6 +55,7 @@ sudo chown -R  ${ME}  $(pwd)/${NAMESPACE}
 #docker run -it --rm --privileged --volumes-from gitian_data  ${NAMESPACE}/gitian-stage1
 docker run -it --rm --privileged -v $(pwd)/${NAMESPACE}:/data ${NAMESPACE}/gitian-stage1
 
+rm -rf Stage2
 mkdir Stage2
 
 echo -e "FROM ${NAMESPACE}/gitian-stage1" > Dockerfile.stage2
