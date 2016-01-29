@@ -11,7 +11,10 @@ sudo service lxcfs start
 GD_BUILD_URL=${GD_BUILD_URL:-https://github.com/mazacoin/mazacoin-new}
 GB_BUILD_COIN=${GD_BUILD_COIN:-maza}
 GD_BUILD_COMMIT=${GD_BUILD_COMMIT:-master}
+GD_BUILD_OSXSDK=${GD_BUILD_OSXSDK:-MacOSX10.9.sdk.tar.gz}
 
+test -d /gitian/gitian-builder/inputs || mkdir /gitian/gitian-builder/inputs
+test -f /gitian/gitian-builder/inputs/${GD_BUILD_OSXSDK} || exit 1
 
 cp /etc/hosts /gitian/hosts.orig
 echo "10.0.3.5 gitian" >> /gitian/hosts.orig
