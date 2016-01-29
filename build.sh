@@ -4,6 +4,7 @@ set -xeo pipefail
 
 GD_ENV_FILE=${1:-maza-10.2.env}
 
+export $(cat maza-10.2.env |egrep -v '^#' | xargs)
 
 # get the local UID, and make sure we build the containers 
 # with gitian user mapped to this
@@ -49,5 +50,5 @@ cd Stage2
 
 docker build -f Dockerfile.stage2 -t ${NAMESPACE}/gitian-builder . 
 cd ..
-
+cp ${GD_ENV_FILE} $(pwd)/${NAMESPACE}/gitian-builder
 docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder    
