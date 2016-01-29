@@ -1,0 +1,14 @@
+#!/bin/bash
+
+wd=`pwd`
+
+if [ -z "$LXC_GUEST_IP" ]; then
+    LXC_GUEST_IP=10.0.3.5
+fi
+
+if [ -z "$LXC_BRIDGE" ]; then
+    LXC_BRIDGE=lxcbr0
+fi
+
+sed "s;ROOTFS;$wd/target-$LXC_SUITE-$LXC_ARCH;;s;ARCH;$LXC_ARCH;g;;s;GUESTIP;$LXC_GUEST_IP;g;s;GUESTLINK;$LXC_BRIDGE;g" < etc/lxc.config.in > var/lxc.config
+
