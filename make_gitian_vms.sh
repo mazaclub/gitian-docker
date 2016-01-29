@@ -25,12 +25,12 @@ cd /gitian/gitian-builder
 
 cp -av /gitian/gitian-builder /data
 test -f  /data/gitian-builder/base-precise-i386  || ./bin/make-base-vm --lxc --arch i386  --suite precise 
-cp -av /gitian/gitian-builder /data
+cp -av /gitian/gitian-builder/base-precise-i386  /data
 test -f  /data/gitian-builder/base-precise-amd64 || ./bin/make-base-vm --lxc --arch amd64 --suite precise 
-cp -av /gitian/gitian-builder /data
+cp -av /gitian/gitian-builder/base-precise-amd64  /data
 
 echo "Now you're ready to run a build"
-echo "docker run -it --rm --privileged -c $(pwd)/maza-src:/gitian/maza -v $(pwd)/gitian-builder:/gitian/gitian-builder  guruvan/gitian-builder"
+echo "docker run -it --rm --privileged -c $(pwd)/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN} -v $(pwd)/gitian-builder:/gitian/gitian-builder  guruvan/gitian-builder"
 
 
 

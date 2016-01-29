@@ -28,12 +28,12 @@ git clone ${GD_BUILD_URL}  /gitian/${GD_BUILD_COIN} \
 for i in win linux osx 
   do 
     cd /gitian/gitian-builder
-    ./bin/gbuild  --url=../${GD_BUILD_COIN} --commit ${GD_BUILD_COIN}=${GD_BUILD_COMMIT}  ../maza/contrib/gitian-descriptors/gitian-${i}.yml 
+    ./bin/gbuild  --url=../${GD_BUILD_COIN} --commit ${GD_BUILD_COIN}=${GD_BUILD_COMMIT}  ../${GD_BUILD_COIN}/contrib/gitian-descriptors/gitian-${i}.yml 
     mv build/out/ BINARIES/${i} 
     echo "Done building for ${i}"
     echo "Moving your results" 
     test -d results/${i} || mkdir -pv results/${i}
     mv var/* results/${i}/
-    mv result/maza-${i}* results/${i}/
+    mv result/${GD_BUILD_COIN}-${i}* results/${i}/
 done
 
