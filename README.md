@@ -6,6 +6,25 @@ Requires Docker 1.7+ installed on a build host
 
 Host may be local iron, AWS (or other) instance, or Virtualbox VM
 
+Currently testing has been done with:
+  - Macbook Pro 
+     - OSX El Capitan
+     - Docker 1.9.1
+     - VirtualBox 5.0.14
+     - Docker-Toolbox
+     - build success is dependent on correct write perms
+         - needs additional scripting to:
+	    - detect OS / Docker-Toolbox use
+	    - ensure that the build directory is mounted in the VM w/ correct perm/owner
+	    - Docker build is set to accommodate correct Vbox use
+       
+
+  - AWS m4.xlarge instance 
+     - Ubuntu 15.10
+     - Docker 1.9.1
+     - Builds are successful
+  
+
 ## Quick Start
 
  ```
