@@ -10,8 +10,15 @@ RUN mkdir /gitian \
      && cd vm-builder-0.12.4+bzr489 \
      && python setup.py install \
      && cd .. \
+
 RUN  cd /gitian ; git clone https://github.com/devrandom/gitian-builder.git 
+
+RUN  cd /gitian \
+      && echo "lxc.aa_allow_incomplete = 1" >> gitian-builder/etc/lxc.config.in \
+      && echo "lxc.aa_profile = unconfined" >> gitian-builder/etc/lxc.config.in
+
 RUN  adduser  --disabled-password --gecos "gitian" --uid LOCAL_UID gitian
+
 
 COPY gitian_build.sh /gitian
 COPY make_gitian_vms.sh /gitian
@@ -19,6 +26,7 @@ COPY config-lxc /gitian/gitian-builder/libexec/config-lxc
 
 RUN  chmod +x /gitian/gitian_build.sh /gitian/gitian-builder/libexec/config-lxc /gitian/make_gitian_vms.sh \
       && chown -R gitian /gitian
+
 RUN echo "gitian  ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/gitian
 
 ENV LXC=1
