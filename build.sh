@@ -41,6 +41,7 @@ cp ${GD_HOST_OSXSDK} Stage1
 cp Dockerfile.stage1 Stage1
 cp gitian_build.sh Stage1
 cp make_gitian_vms.sh Stage1
+cp travis_wait.sh Stage1
 cp config-lxc Stage1
 cp ${GD_ENV_FILE} Stage1
 cd Stage1
