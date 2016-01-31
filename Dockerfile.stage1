@@ -28,8 +28,9 @@ ADD . /
 RUN mv /gitian_build.sh /gitian/
 RUN mv /make_gitian_vms.sh /gitian/
 RUN mv /config-lxc /gitian/gitian-builder/libexec/
+RUN mv /travis_wait.sh /gitian/gitian-builder/
 
-RUN  chmod +x /gitian/gitian_build.sh /gitian/gitian-builder/libexec/config-lxc /gitian/make_gitian_vms.sh \
+RUN  chmod +x /gitian/gitian_build.sh /gitian/gitian-builder/travis_wait.sh /gitian/gitian-builder/libexec/config-lxc /gitian/make_gitian_vms.sh \
       && chown -R gitian /gitian
 
 RUN echo "gitian  ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/gitian

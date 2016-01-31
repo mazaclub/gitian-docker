@@ -28,6 +28,10 @@ git clone ${GD_BUILD_URL}  /gitian/${GD_BUILD_COIN} \
   && make -C ../${GD_BUILD_COIN}/depends download SOURCES_PATH=$(pwd)/cache/common \
   && test -d BINARIES || mkdir -pv /gitian/gitian-builder/BINARIES
 
+if [ "${GD_BUILDER}" = "TRAVIS" ]; then  
+   echo "TRAVIS BUILD detected"
+   ./travis_wait.sh &
+fi
 for i in win linux osx 
   do 
     cd /gitian/gitian-builder

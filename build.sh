@@ -4,6 +4,7 @@ set -xeo pipefail
 
 
 GD_ENV_FILE=${1:-maza-10.2.env}
+test -z ${TRAVIS_BUILD_DIR} || echo "GD_BUILDER=TRAVIS" >> maza-10.2.env
 
 export $(cat maza-10.2.env |egrep -v '^#' | xargs)
 
