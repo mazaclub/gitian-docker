@@ -20,9 +20,14 @@ RUN  cd /gitian \
 RUN  adduser  --disabled-password --gecos "gitian" --uid LOCAL_UID gitian
 
 
-COPY gitian_build.sh /gitian
-COPY make_gitian_vms.sh /gitian
-COPY config-lxc /gitian/gitian-builder/libexec/config-lxc
+#COPY gitian_build.sh /gitian
+#COPY make_gitian_vms.sh /gitian
+#COPY config-lxc /gitian/gitian-builder/libexec/config-lxc
+ADD . /
+
+RUN mv /gitian_build.sh /gitian/
+RUN mv /make_gitian_vms.sh /gitian/
+RUN mv /config-lxc /gitian/gitian-builder/libexec/
 
 RUN  chmod +x /gitian/gitian_build.sh /gitian/gitian-builder/libexec/config-lxc /gitian/make_gitian_vms.sh \
       && chown -R gitian /gitian
