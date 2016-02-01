@@ -3,7 +3,7 @@
 set -xeo pipefail
 
 
-GD_ENV_FILE=${1:-maza-10.2.env}
+GD_ENV_FILE=${1:-maza.env}
 export GD_OS_PACKAGE=${2}
 
 case ${GD_OS_PACKAGE} in 
@@ -30,7 +30,7 @@ test -z ${TRAVIS_BUILD_DIR} || export GD_BUILDER=TRAVIS
 if [ "${GD_BUILDER}" = "TRAVIS" ]; then 
    echo "GD_BUILDER=TRAVIS" >> ${GD_ENV_FILE} 
 fi
-export $(cat maza-10.2.env |egrep -v '^#' | xargs)
+export $(cat ${GD_ENV_FILE}  |egrep -v '^#' | xargs)
 
 # get the local UID, and make sure we build the containers 
 # with gitian user mapped to this
