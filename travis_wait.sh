@@ -7,7 +7,9 @@ try () {
 }
 while true ; do
    tail -n1 var/build.log
-   sleep 120
+   sleep 5
+   kill $(pgrep tail)
+   tail -f var/build.log &
    pgrep gbuild && tail -n1 var/build.log
    sleep 120
    pgrep gbuild || try
