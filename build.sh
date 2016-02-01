@@ -59,22 +59,23 @@ chmod +x ./clean.sh
 # make a build dir for Docker 
 # this prevents Docker context from including 20GB of 
 # base-vm files in subsequent runs 
-rm -rf Stage1
-mkdir Stage1 
-cp ${GD_HOST_OSXSDK} Stage1
-cp Dockerfile.stage1 Stage1
-cp gitian_build.sh Stage1
-cp make_gitian_vms.sh Stage1
-cp travis_wait.sh Stage1
-cp config-lxc Stage1
-cp ${GD_ENV_FILE} Stage1
-cd Stage1
-
-
-
-sed 's/LOCAL_UID/'${ME}'/g' Dockerfile.stage1 > Dockerfile
-docker build -f Dockerfile -t ${NAMESPACE}/gitian-stage1 . 
-cd ..
+if [ "${GD_BUILDER}" != "TRAVIS" ] ; then
+   rm -rf Stage1
+   mkdir Stage1 
+   cp ${GD_HOST_OSXSDK} Stage1
+   cp Dockerfile.stage1 Stage1
+   cp gitian_build.sh Stage1
+   cp make_gitian_vms.sh Stage1
+   cp travis_wait.sh Stage1
+   cp config-lxc Stage1
+   cp ${GD_ENV_FILE} Stage1
+   cd Stage1
+   sed 's/LOCAL_UID/'${ME}'/g' Dockerfile.stage1 > Dockerfile
+   docker build -f Dockerfile -t ${NAMESPACE}/gitian-stage1 . 
+   cd ..
+else
+  docker pull maza/gitian-travis || exit 1
+fi
 
 mkdir -pv $(pwd)/${NAMESPACE}/gitian-builder/inputs
 cp ${GD_HOST_OSXSDK} $(pwd)/${NAMESPACE}/gitian-builder/inputs
