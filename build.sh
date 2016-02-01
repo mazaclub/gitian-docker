@@ -99,6 +99,12 @@ cd ..
 cp ${GD_ENV_FILE} $(pwd)/${NAMESPACE}/gitian-builder
 if [ "${GD_BUILDER}" = "TRAVIS" ]; then
    echo "TRAVIS-CI Build Detected....switiching to .travis.yml script"
+   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder linux" > ./linux.sh
+   chmod +x ./linux.sh
+   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder osx" > ./osx.sh 
+   chmod +x ./osx.sh
+   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder win" > ./win.sh
+   chmod +x ./win.sh
    exit 0
 fi
 
