@@ -1,5 +1,8 @@
 #!/bin/bash 
 
+GD_OS_PACKAGE=$1
+test -z ${GD_OS_PACKAGE} && exit 99
+
 set -xeo pipefail
 sudo brctl addbr lxcbr0
 sudo ifconfig lxcbr0 10.0.3.1/24 up
@@ -32,7 +35,8 @@ if [ "${GD_BUILDER}" = "TRAVIS" ]; then
    echo "TRAVIS BUILD detected"
    ./travis_wait.sh &
 fi
-for i in win linux osx 
+for i in ${GD_OS_PACKAGE}
+#win linux osx 
   do 
     cd /gitian/gitian-builder
     ./bin/gbuild  --url=../${GD_BUILD_COIN} --commit ${GD_BUILD_COIN}=${GD_BUILD_COMMIT}  ../${GD_BUILD_COIN}/contrib/gitian-descriptors/gitian-${i}.yml 
