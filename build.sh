@@ -99,12 +99,22 @@ cd ..
 cp ${GD_ENV_FILE} $(pwd)/${NAMESPACE}/gitian-builder
 if [ "${GD_BUILDER}" = "TRAVIS" ]; then
    echo "TRAVIS-CI Build Detected....switiching to .travis.yml script"
+   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder linux-deps" > ./linux-deps.sh
+   chmod +x ./linux-deps.sh
+   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder osx-deps" > ./osx-deps.sh 
+   chmod +x ./osx-deps.sh
+   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder win32-deps" > ./win32-deps.sh
+   chmod +x ./win32-deps.sh
+   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder win64-deps" > ./win64-deps.sh
+   chmod +x ./win64-deps.sh
    echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder linux" > ./linux.sh
    chmod +x ./linux.sh
    echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder osx" > ./osx.sh 
    chmod +x ./osx.sh
-   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder win" > ./win.sh
-   chmod +x ./win.sh
+   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder win32" > ./win32.sh
+   chmod +x ./win32.sh
+   echo "docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder win64" > ./win64.sh
+   chmod +x ./win64.sh
    exit 0
 fi
 
