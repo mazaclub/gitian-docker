@@ -26,8 +26,10 @@ linux)
       ;;
 esac
 
-test -z ${TRAVIS_BUILD_DIR} || echo "GD_BUILDER=TRAVIS" >> maza-10.2.env
-
+test -z ${TRAVIS_BUILD_DIR} || export GD_BUILDER=TRAVIS
+if [ "${GD_BUILDER}" = "TRAVIS" ]; then 
+   echo "GD_BUILDER=TRAVIS" >> ${GD_ENV_FILE} 
+fi
 export $(cat maza-10.2.env |egrep -v '^#' | xargs)
 
 # get the local UID, and make sure we build the containers 
@@ -95,6 +97,11 @@ cd Stage2
 docker build -f Dockerfile.stage2 -t ${NAMESPACE}/gitian-builder . 
 cd ..
 cp ${GD_ENV_FILE} $(pwd)/${NAMESPACE}/gitian-builder
+if [ "${GD_BUILDER}" = "TRAVIS" ]; then
+   echo "TRAVIS-CI Build Detected....switiching to .travis.yml script"
+   exit 0
+fi
+
 for os_pkg in ${GD_OS_PACKAGE} ; do
     docker run -it --rm  --privileged --env-file ${GD_ENV_FILE}  -v $(pwd)/${NAMESPACE}/gitian-builder:/gitian/gitian-builder -v $(pwd)/${NAMESPACE}/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN}  ${NAMESPACE}/gitian-builder ${GD_OS_PACKAGE}
 done
