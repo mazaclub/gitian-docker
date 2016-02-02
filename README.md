@@ -7,6 +7,12 @@ Requires Docker 1.7+ installed on a build host
 Host may be local iron, AWS (or other) instance, or Virtualbox VM
 
 Currently testing has been done with:
+  - Travis-CI.org
+    - [.travis.yml example](https://github.com/shastafareye/travis-docker-example)
+    - MAZA 0.10.2 will not complete if ALL steps are performed on travis as per the example above
+    - travis build pulls [maza/gitian-travis](https://github.com/guruvan/gitian-docker/blob/master/Dockerfile) which is an Automated Build on Dockerhub
+    - Travis caching may or may not work in the example provided
+    - Builds currently succeed, with fail marks (hashes are provided, travis marks build as failed because a script commend exited non-zero)
   - Macbook Pro 
      - OSX El Capitan
      - Docker 1.9.1
