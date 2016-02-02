@@ -2,22 +2,19 @@
 
 
 try () {
- sleep 420
- pgrep gbuild || break
+ tail -n5 var/build.log
+ sleep 300
+ tail -n5 var/build.log
+ pgrep gbuild || exit 0
 }
 main () {
 while true ; do
-   tail -n1 var/build.log
-   sleep 5
-   pgrep tail | xargs kill -1
-   tail -f var/build.log &
-   pgrep gbuild && tail -n1 var/build.log
-   sleep 320
+   tail -n5 var/install.log
+   sleep 10
+   pgrep gbuild && tail -n5 var/build.log
+   sleep 30
    echo "Testing to see if we're building"
    pgrep gbuild || try
 done
 }
 main
-echo "One Last check to see if we're building"
-pgrep gbuild && main
-exit
