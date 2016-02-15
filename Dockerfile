@@ -42,5 +42,5 @@ ENV MIRROR_HOST=127.0.0.1
 USER gitian
 WORKDIR ["/gitian"]
 
-
+RUN        /gitian/make_gitian_vms.sh
 ENTRYPOINT ["/gitian/make_gitian_vms.sh"]
