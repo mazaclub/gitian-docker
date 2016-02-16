@@ -34,7 +34,6 @@ env:
     - GD_COIN_PACKAGE=maza 
 install:
 - echo "STARTING BUILD SCRIPT AT $(date)"
-- docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS} -e ${DOCKER_EMAIL} 
 - cd ${TRAVIS_BUILD_DIR}
 - cd gitian-docker
 - docker pull maza/gitian-travis && docker tag -f maza/gitian-travis ${USER}/gitian-stage1
