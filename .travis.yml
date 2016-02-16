@@ -26,8 +26,11 @@ before_install:
 - wget https://s3-us-west-2.amazonaws.com/downloads.maza.club/MacOSX10.9.sdk.tar.gz 
 env:
 - GD_COIN_PACKAGE=maza
+- GD_BUILD_SHORT=$(echo ${GD_BUILD_COMMIT}| cut -c1-8)
+- secure: "N5U0uW+sXbM3S5qbKbZHLttsM1rwZijCdhQoBKnKplzTqj2LX325nXuvNJHsGB6k/EOdRJllnJxpm1Ewz9SORhzSipFTu1Rn6gFU21oxjUhVLJiTCZz7TyKQ/wYy+P+RMoa7n02ymvegb0fi/iBSBOeaULhgFzi/ADC1kHxRXSnicF+Y9UOnyHQv0+zW1VvQSKie3iXfLM6nyhX2hNuEgFK39JSRegJ+Xick7dCLYLifuzgtXc2bXyGnbGSf7BOwI+GC8fMW7Nzqwuw+696MIxEh3Qk8qE+cGXy0aBkKrhGB5nuf2hVodqqyRDgMDNRB0o+B4Js3aduJQcFG0rNgUy1VbUykqTYVprNauibAtgh7ng6UKjqyoQW4adra4g7EEMfJ2OJolMj8q+g/byDRfYzgOKS13DdzCEBe0EuA6UVUEXv8AAijfVhg2m36gt1+TzmiBsk6j7WiEBtPoWOi2AJ6AOnq4HTeK3sDDiJaCIBOhUMOBsn75UXycEJDxoB7EG7ob2qu0xXyRg0Cp+54abdk5iDmnoPfz41G2y7TfQDwn0Q4QKeWFXfd1A4TOtdZGFl2F7hF+PAnjGOwOIoNA/YlgZUDiXARdo82Gru9psQa64t2G303bTv03xPZIFocDhLglBHBLFWJeTvae7hmVCy9T56e2BTXi9NOaRcHxn4="
 install:
 - echo "STARTING BUILD SCRIPT AT $(date)"
+- docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS} -e ${DOCKER_EMAIL} 
 - cd ${TRAVIS_BUILD_DIR}
 - cd gitian-docker
 - docker pull maza/gitian-travis && docker tag -f maza/gitian-travis ${USER}/gitian-stage1
@@ -36,4 +39,11 @@ script:
 - cd ${TRAVIS_BUILD_DIR}/gitian-docker
 - ./build.sh ${GD_COIN_PACKAGE}.env all
 - echo "You are done Thanks"
+after_success:
+- docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS} -e ${DOCKER_EMAIL} 
+- docker tag travis/gitian-builder maza/gitian-builder:${GD_BUILD_SHORT}
+- docker tag travis/gitian-builder maza/gitian-builder:latest
+- docker push  maza/gitian-builder:${GD_BUILD_SHORT}
+- docker push maza/gitian-builder:latest
+
 

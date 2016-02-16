@@ -17,21 +17,17 @@ echo "Your Local build.sh should have configured this"
 echo -e "to map to \$NAMESPACE/gitian-builder"
 echo -e "and should be owned by the the local user"
 echo -e "executing build.sh"
-echo "USE_LXC=1" > /data/gitian-builder/gitiian_builder.env
-echo "GITIAN_HOST_IP=10.0.3.1" >> /data/gitian-builder/gitiian_builder.env
-echo "LXC_GUEST_IP=10.0.3.5" >> /data/gitian-builder/gitiian_builder.env
+echo "USE_LXC=1" > /data/gitian-builder/gitian_builder.env
+echo "GITIAN_HOST_IP=10.0.3.1" >> /data/gitian-builder/gitian_builder.env
+echo "LXC_GUEST_IP=10.0.3.5" >> /data/gitian-builder/gitian_builder.env
 
 cd /gitian/gitian-builder
 
-if [ -z ${DOCKER_HUB} ]; then 
  test -d /data/gitian-builder/.git || cp -av /gitian/gitian-builder /data
  #test -f  /data/gitian-builder/base-precise-i386  || ./bin/make-base-vm --lxc --arch i386  --suite precise 
  #test -f  /data/gitian-builder/base-precise-i386  || cp -av /gitian/gitian-builder/base-precise-i386  /data/gitian-builder
  test -f  /data/gitian-builder/base-precise-amd64 || ./bin/make-base-vm --lxc --arch amd64 --suite precise 
  test -f  /data/gitian-builder/base-precise-amd64 || cp -av /gitian/gitian-builder/base-precise-amd64  /data/gitian-builder
-else
- ./bin/make-base-vm --lxc --arch amd64 --suite precise 
-fi
 echo "Now you're ready to run a build"
 echo "docker run -it --rm --privileged -c $(pwd)/${GD_BUILD_COIN}-src:/gitian/${GD_BUILD_COIN} -v $(pwd)/gitian-builder:/gitian/gitian-builder  guruvan/gitian-builder"
 
