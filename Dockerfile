@@ -42,7 +42,6 @@ ENV MIRROR_HOST=127.0.0.1
 USER gitian
 WORKDIR ["/gitian"]
 
-RUN        mkdir -v /data \
-	    && sed -i -e '/sudo\ service\ cgman/d' -e '/sudo\ brctl/d' -e '/sudo\ ifconfig/d' /gitian/make_gitian_vms.sh \
-            &&  /gitian/make_gitian_vms.sh
+RUN     sed -i -e '/sudo\ service\ cgman/d' -e '/sudo\ brctl/d' -e '/sudo\ ifconfig/d' /gitian/make_gitian_vms.sh \
+            && DOCKER_HUB=1  /gitian/make_gitian_vms.sh
 ENTRYPOINT ["/gitian/make_gitian_vms.sh"]
