@@ -1,0 +1,39 @@
+sudo: required
+
+services:
+  - docker
+
+cache:
+  apt: true
+  directories:
+    - ${TRAVIS_BUILD_DIR}/gitian-docker/${USER}/gitian-builder/cache
+    - ${TRAVIS_BUILD_DIR}/gitian-docker/${USER}/gitian-builder/inputs
+before_install:
+- echo "LAUNCHING at $(date)"
+- cd ${TRAVIS_BUILD_DIR}
+- echo "git clone https://github.com/guruvan/gitian-docker"
+- test -d gitian-docker || mkdir -v gitian-docker
+- cd gitian-docker
+- git init
+- git remote add origin https://github.com/guruvan/gitian-docker
+- git fetch origin
+- git checkout -t origin/master
+- echo "GD_BUILD_URL=https://github.com/guruvan/maza" > maza.env
+- echo "GD_BUILD_COMMIT=da3675a56fa3ce7b494c5ec85f395331413b38c6" >> maza.env
+- echo "GD_BUILD_COIN=maza" >> maza.env
+- echo "GD_HOST_OSXSDK=${TRAVIS_BUILD_DIR}/gitian-docker/MacOSX10.9.sdk.tar.gz" >> maza.env
+- echo "GD_BUILD_OSXSDK=MacOSX10.9.sdk.tar.gz" >> maza.env
+- wget https://s3-us-west-2.amazonaws.com/downloads.maza.club/MacOSX10.9.sdk.tar.gz 
+env:
+- GD_COIN_PACKAGE=maza
+install:
+- echo "STARTING BUILD SCRIPT AT $(date)"
+- cd ${TRAVIS_BUILD_DIR}
+- cd gitian-docker
+- docker pull maza/gitian-travis && docker tag -f maza/gitian-travis ${USER}/gitian-stage1
+- echo "FINISHED STAGE 1 at  $(date)"
+script:
+- cd ${TRAVIS_BUILD_DIR}/gitian-docker
+- ./build.sh ${GD_COIN_PACKAGE}.env all
+- echo "You are done Thanks"
+
