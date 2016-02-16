@@ -43,8 +43,9 @@ script:
 - ./build.sh ${GD_COIN_PACKAGE}.env all
 - echo "You are done Thanks"
 after_success:
--  if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then  export DOCKERBIN=docker ; else export  DOCKERBIN=echo ;fi
--  if [ "{TRAVIS_PULL_REQUEST}" != "false" ]; then  docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS} -e ${DOCKER_EMAIL}; fi
+- echo "Travis_PullRequest? ${TRAVIS_PULL_REQUEST}"
+- if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then  export DOCKERBIN=docker ; else export  DOCKERBIN=echo ;fi
+- if [ "{TRAVIS_PULL_REQUEST}" != "false" ]; then  docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS} -e ${DOCKER_EMAIL}; fi
 - ${DOCKERBIN} tag travis/gitian-builder maza/gitian-builder:${GD_BUILD_SHORT}
 - ${DOCKERBIN} tag travis/gitian-builder maza/gitian-builder:latest
 - ${DOCKERBIN} push  maza/gitian-builder:${GD_BUILD_SHORT}

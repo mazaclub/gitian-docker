@@ -1,5 +1,9 @@
 # gitian-docker 
 
+[![Build Status](https://travis-ci.org/mazaclub/gitian-docker.svg?branch=master)](https://travis-ci.org/mazaclub/gitian-docker)
+
+
+
 Build coin daemons & QT wallets with gitian in docker
 
 Requires Docker 1.7+ installed on a build host
