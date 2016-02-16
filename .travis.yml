@@ -25,15 +25,15 @@ before_install:
 - echo "GD_BUILD_OSXSDK=MacOSX10.9.sdk.tar.gz" >> maza.env
 - wget https://s3-us-west-2.amazonaws.com/downloads.maza.club/MacOSX10.9.sdk.tar.gz 
 env:
-- GD_COIN_PACKAGE=maza 
   global:
     - GD_BUILD_SHORT=$(echo ${GD_BUILD_COMMIT}| cut -c1-8)
     - secure: "N5U0uW+sXbM3S5qbKbZHLttsM1rwZijCdhQoBKnKplzTqj2LX325nXuvNJHsGB6k/EOdRJllnJxpm1Ewz9SORhzSipFTu1Rn6gFU21oxjUhVLJiTCZz7TyKQ/wYy+P+RMoa7n02ymvegb0fi/iBSBOeaULhgFzi/ADC1kHxRXSnicF+Y9UOnyHQv0+zW1VvQSKie3iXfLM6nyhX2hNuEgFK39JSRegJ+Xick7dCLYLifuzgtXc2bXyGnbGSf7BOwI+GC8fMW7Nzqwuw+696MIxEh3Qk8qE+cGXy0aBkKrhGB5nuf2hVodqqyRDgMDNRB0o+B4Js3aduJQcFG0rNgUy1VbUykqTYVprNauibAtgh7ng6UKjqyoQW4adra4g7EEMfJ2OJolMj8q+g/byDRfYzgOKS13DdzCEBe0EuA6UVUEXv8AAijfVhg2m36gt1+TzmiBsk6j7WiEBtPoWOi2AJ6AOnq4HTeK3sDDiJaCIBOhUMOBsn75UXycEJDxoB7EG7ob2qu0xXyRg0Cp+54abdk5iDmnoPfz41G2y7TfQDwn0Q4QKeWFXfd1A4TOtdZGFl2F7hF+PAnjGOwOIoNA/YlgZUDiXARdo82Gru9psQa64t2G303bTv03xPZIFocDhLglBHBLFWJeTvae7hmVCy9T56e2BTXi9NOaRcHxn4="
     - secure: "dIaW7AIgubw60sSJa2bUw1B0Z4lJM6F/11hPvQI7XX6lrVxZSAC1m/PzTA1GlVRsaGi8mZVA9DbHkZ+QR8bB9hqVEief2CKn4nD+ok7Sfx21ELtfFDSGzoBDNMhNvM6j3dQ6jN6RHvCjyfTGoPq7vXWRARHdLC3YVNb2vkXtbrYBtl3RdG6okDzTy9yApvc/ceuYAmIkOe0T+VWssKdFVK7yz0sbQNaRfPJfSuz6uTzOKTdTT3+2b/SAEV6bOKWaTC2u4+wTm7MBllGVFOJOuocSsi8/K07TyhzKd2+TWFN8+KwdD2Wc2DU5+CwDBrvvvsd1AvbnyA3FZU3WRCez01TD1Uz0L+EqfRwIAdhLc9+7PyAO9PQoYGa1HmCqe2NPDlk3b0T67mmxAcroWEVxWgXMYXVdXpHoESAK67euxtM/m0rS0x1MWgqeF1t9kqCsVUPVjgOUbmQTYlKQB4szZqHIaGu80eVl3tAhtChKHytb9VVXLvswBSbv+fOfVi5mCYLLjmIwU/lB7Zfzl6DYAA2TXteccFzatn/5daNHhr/Vu94wgJ4iVOjxZ7DOSK1F+RJpU8XLNHUfCrk3Z2urJbbbpFJdwI+pFUWdzAxgxN5vD1Y16vE+q3HU032aZVfXeQ2pd5WTFB/CloK5N8StzKwcYtXTM0PEWR9/hFG2G1E="
     - secure: "Ke/FIobX0uAQiVzhXCoBaRw7t21Dq5GWl3k7ASYqpuTreP7mSi9gkvyQTZ6MCuIQUbuyh8aMmcmRtTdy4XaReHHWmCZrpQfhn8Me6ULZIPP8bEMwazCSS87K4DRf44JHu1hFZoMhLoWs8JRtJYt5+XC0+rSz5NLNPXKKC6V8OhZyuvrA3vFkQsPNR1yjvSFFR64xCg7OxJGVN1KOxUeyoGgaXugDxqCGqRCSielXZQzZnYAl/Z/GvLNd+A0MDJL9zk884IWUqWaBZ5tuX5awA1+1pymNv3kph/papoVmjrxNi4mZeb14XfwPjGGPn7oZu1mpD5v07D3dHUnABqo6cprykSnOR2k8T8g/Smsz/a6Mvr8j2rn9C+OLBbGK7EOIPzbQK75cypYmZNECq1VI56ig2Jup8fN36ulg0JR3/46teMXKNx5EP+X/L99r9Chsq2Tfoz0DcIIEE8ux7xMsUgsF4y5seed98wFwr7SGdhoiXnqePjiUr9ZndvZ1BfrYmZ935mYK1Z2Yv+Ug5BssT7ONJEph407wytxiRTPtRe6i9jBjcbFLeAGbeQpBr1wwOJ8bxyEo21AYN2kGEynQn7og7qXkA1ahy6d1vccNJasb3RkROhjappPCfsQ5U7jbYq3UdXJ+PGTXDbLB3sKoDSjaVCzI6gcx6cJ5yOY0U8o="
+  matrix:
+    - GD_COIN_PACKAGE=maza 
 install:
 - echo "STARTING BUILD SCRIPT AT $(date)"
-- docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS} -e ${DOCKER_EMAIL} 
 - cd ${TRAVIS_BUILD_DIR}
 - cd gitian-docker
 - docker pull maza/gitian-travis && docker tag -f maza/gitian-travis ${USER}/gitian-stage1
@@ -43,8 +43,9 @@ script:
 - ./build.sh ${GD_COIN_PACKAGE}.env all
 - echo "You are done Thanks"
 after_success:
--  if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then  export DOCKERBIN=docker ; else export  DOCKERBIN=echo ;fi
--  if [ "{TRAVIS_PULL_REQUEST}" != "false" ]; then  docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS} -e ${DOCKER_EMAIL} 
+- echo "Travis_PullRequest? ${TRAVIS_PULL_REQUEST}"
+- if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then  export DOCKERBIN=docker ; else export  DOCKERBIN=echo ;fi
+- if [ "{TRAVIS_PULL_REQUEST}" != "false" ]; then  docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS} -e ${DOCKER_EMAIL}; fi
 - ${DOCKERBIN} tag travis/gitian-builder maza/gitian-builder:${GD_BUILD_SHORT}
 - ${DOCKERBIN} tag travis/gitian-builder maza/gitian-builder:latest
 - ${DOCKERBIN} push  maza/gitian-builder:${GD_BUILD_SHORT}
