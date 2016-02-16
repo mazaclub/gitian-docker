@@ -45,9 +45,9 @@ script:
 after_success:
 - echo "Travis_PullRequest? ${TRAVIS_PULL_REQUEST}"
 - if [ "${TRAVIS_PULL_REQUEST}"  = "false" ]; then docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASS} -e ${DOCKER_EMAIL}; fi
-- if [ "$(TRAVIS_PULL_REQUEST}"  = "false" ]; then docker tag  ${USER}/gitian-builder maza/gitian-builder:${GD_BUILD_SHORT}; fi
-- if [ "$(TRAVIS_PULL_REQUEST}"  = "false" ]; then docker tag  ${USER}/gitian-builder maza/gitian-builder:latest; fi
-- if [ "$(TRAVIS_PULL_REQUEST}"  = "false" ]; then docker push maza/gitian-builder:${GD_BUILD_SHORT}; fi
-- if [ "$(TRAVIS_PULL_REQUEST}"  = "false" ]; then docker push maza/gitian-builder:latest; fi
+- if [ "${TRAVIS_PULL_REQUEST}"  = "false" ]; then docker tag  ${USER}/gitian-builder maza/gitian-builder:${GD_BUILD_SHORT}; fi
+- if [ "${TRAVIS_PULL_REQUEST}"  = "false" ]; then docker tag  ${USER}/gitian-builder maza/gitian-builder:latest; fi
+- if [ "${TRAVIS_PULL_REQUEST}"  = "false" ]; then docker push maza/gitian-builder:${GD_BUILD_SHORT}; fi
+- if [ "${TRAVIS_PULL_REQUEST}"  = "false" ]; then docker push maza/gitian-builder:latest; fi
 - if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then echo "Build Complete at $(date)" ; fi 
 
