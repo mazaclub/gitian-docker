@@ -31,6 +31,27 @@ Currently testing has been done with:
      - Builds are successful
   
 
+## Prebuilt Image Availability
+  
+  *  [maza/gitian-travis](https://hub.docker.com/r/maza/gitian-travis)
+  *  [maza/gitian-docker](https://hub.docker.com/r/maza/gitian-docker)
+  - images with premade base vms are created at travis-ci and pushed to docker hub (view .travis.yml)
+     - use of LXC prevents this from being made on dockerhub infrastructure
+  - images without premade base vms are created vi Docker hub
+     - push requires use of encrpted travis variables
+  - <strong>Prebuilt images are for automation & testing, and should not be relied on exclusively</strong> 
+  - Available images are to support automated gitian building vi travis-ci
+  - [MAZA](https://mazacoin.org) is currently the only supported coin
+    - more coins will be added to a build matrix as time permits
+
+ <strong> 
+  - A full daemon/QT build with dependencies will exceed the 50min time limit on open source travis-ci.org accounts
+  - To support full automation, 2 projects (gitian-docker & main coin project) are required
+  - users with more flexible constraints should operate without premade images
+  </strong>
+
+
+ 
 ## Quick Start
 
  ```
