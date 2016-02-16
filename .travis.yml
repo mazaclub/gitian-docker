@@ -42,7 +42,6 @@ install:
 script:
 - cd ${TRAVIS_BUILD_DIR}/gitian-docker
 - ./build.sh ${GD_COIN_PACKAGE}.env all
-- echo "script:  completed at $(date)" 
 after_success:
 - echo "Travis_PullRequest? ${TRAVIS_PULL_REQUEST}"
 - if [ "$TRAVIS_PULL_REQUEST"  != "false" ]; then export DOCKERBIN=docker ; else export  DOCKERBIN=echo ;fi
