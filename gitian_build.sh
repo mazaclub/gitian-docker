@@ -32,6 +32,7 @@ git clone ${GD_BUILD_URL}  /gitian/${GD_BUILD_COIN} \
   && test -d BINARIES || mkdir -pv /gitian/gitian-builder/BINARIES
 
 if [ "${GD_BUILDER}" = "TRAVIS" ]; then  
+   test -f  /gitian/gitian-builder/base-precise-amd64  || cp -av /data/gitian-builder/base-precise-amd64 /gitian/gitian-builder
    echo "TRAVIS BUILD detected"
    ./travis_wait.sh &
 fi
