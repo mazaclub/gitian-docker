@@ -1,7 +1,7 @@
 FROM ubuntu:15.10
 
 RUN apt-get update \
-     && apt-get install -y python python-pip wget git apache2 ruby qemu-utils  apt-cacher-ng lxc  sudo debootstrap net-tools
+     && apt-get install -y python python-pip wget curl git apache2 ruby qemu-utils  apt-cacher-ng lxc  sudo debootstrap net-tools
 RUN mkdir /gitian \
      && cd /gitian \
      && wget http://archive.ubuntu.com/ubuntu/pool/universe/v/vm-builder/vm-builder_0.12.4+bzr489.orig.tar.gz \
@@ -42,7 +42,7 @@ ENV LXC_GUEST_IP=10.0.3.5
 ENV MIRROR_HOST=127.0.0.1
 
 USER gitian
-WORKDIR ["/gitian"]
+WORKDIR /gitian
 
 
 ENTRYPOINT ["/gitian/make_gitian_vms.sh"]
