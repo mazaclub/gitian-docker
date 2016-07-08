@@ -40,5 +40,5 @@ ENV LXC_GUEST_IP=10.0.3.5
 ENV MIRROR_HOST=127.0.0.1
 
 USER gitian
-WORKDIR ["/gitian"]
+WORKDIR /gitian
 ENTRYPOINT ["/gitian/make_gitian_vms.sh"]
